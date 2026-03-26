@@ -1,9 +1,1454 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Etherva</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etherva | Learn Smarter, Grow Together</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8faff 0%, #f0f4fe 100%);
+      overflow-x: hidden;
+    }
+
+    /* animated background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .bg-animation::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 50%, rgba(96,165,250,0.1) 0%, transparent 50%);
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-5%, -5%); }
+    }
+
+    /* header with integrated logo */
+    .header {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Logo Container */
+    .etherva-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .etherva-logo:hover {
+      transform: scale(1.02);
+    }
+
+    /* SVG Logo - Ribbon + E */
+    .logo-svg {
+      width: 50px;
+      height: 50px;
+      display: block;
+    }
+
+    /* Ribbon Paths - Static */
+    .ribbon-path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ribbon-1 { stroke: #cf9f6e; stroke-width: 4; }
+    .ribbon-2 { stroke: #9f7e5c; stroke-width: 3.5; }
+    .ribbon-3 { stroke: #b48c5c; stroke-width: 4; }
+    .ribbon-4 { stroke: #cab09b; stroke-width: 3.5; }
+
+    /* Center Letter E */
+    .center-e {
+      font-size: 18px;
+      font-weight: 600;
+      fill: #ffffff;
+      dominant-baseline: middle;
+      text-anchor: middle;
+    }
+
+    /* Brand Text */
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .etherva-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: white;
+      line-height: 1;
+    }
+
+    .etherva-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      margin-top: 2px;
+      color: #a855f7;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #a855f7;
+    }
+
+    /* hero section */
+    .hero {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      background: linear-gradient(135deg, #1e293b, #3b82f6, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .hero-tagline {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease 0.1s backwards;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: #475569;
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* mission section */
+    .mission {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      padding: 5rem 2rem;
+      margin: 4rem 0;
+    }
+
+    .mission-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .mission h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mission p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* What We're Building Section - Enhanced */
+    .building-section {
+      max-width: 1400px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: #64748b;
+      font-size: 1.1rem;
+    }
+
+    /* Tabs Navigation */
+    .building-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.8rem 2rem;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #475569;
+    }
+
+    .tab-btn:hover {
+      border-color: #a855f7;
+      color: #a855f7;
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Courses Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px rgba(96,165,250,0.2);
+    }
+
+    .course-image {
+      height: 160px;
+      background: linear-gradient(135deg, #60a5fa20, #a855f720);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .course-info {
+      padding: 1.5rem;
+    }
+
+    .course-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .course-info p {
+      color: #64748b;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      color: #a855f7;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Resources Grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px rgba(96,165,250,0.2);
+    }
+
+    .resource-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .resource-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .resource-card p {
+      color: #64748b;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .resource-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.3rem 0.8rem;
+      background: #f1f5f9;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #a855f7;
+    }
+
+    /* Community Feed */
+    .community-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .feed-post {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .feed-post:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 25px rgba(96,165,250,0.15);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-avatar {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .post-user h4 {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+      color: #1e293b;
+    }
+
+    .post-time {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .post-content {
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .post-stats {
+      display: flex;
+      gap: 1.5rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .post-stats span {
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .post-stats span:hover {
+      color: #a855f7;
+    }
+
+    .add-post {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .add-post input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .add-post button {
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .add-post button:hover {
+      transform: scale(1.02);
+    }
+
+    /* Feature Cards (Original) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px rgba(96,165,250,0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .feature-card p {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .feature-description {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: 1rem;
+      padding: 1rem 1.2rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.6;
+      border-left: 3px solid #a855f7;
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    .feature-description.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Team Section */
+    .team-section {
+      max-width: 1400px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .team-section h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .team-subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-card-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .team-card-inner {
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .team-card:hover .team-card-inner {
+      transform: scale(1.02);
+    }
+
+    .team-avatar {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, #60a5fa20, #a855f720);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .team-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+
+    .team-role {
+      color: #3b82f6;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-bio {
+      color: #64748b;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .team-description {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: 1rem;
+      padding: 1rem 1.2rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.6;
+      border-left: 3px solid #3b82f6;
+      display: none;
+    }
+
+    .team-description.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      padding: 5rem 2rem;
+      margin: 5rem 0;
+    }
+
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      color: white;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Timeline */
+    .journey-section {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .journey-section h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #1e293b;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, #60a5fa, #a855f7);
+    }
+
+    .timeline-item-wrapper {
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .timeline-item {
+      cursor: pointer;
+    }
+
+    .timeline-content {
+      width: calc(50% - 3rem);
+      padding: 1.5rem;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+
+    .timeline-item-wrapper:nth-child(odd) .timeline-content {
+      margin-left: auto;
+    }
+
+    .timeline-item:hover .timeline-content {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(96,165,250,0.2);
+    }
+
+    .timeline-year {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      color: #64748b;
+    }
+
+    .timeline-icon {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .timeline-description {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: 1rem;
+      padding: 1rem 1.2rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.6;
+      border-left: 3px solid #f59e0b;
+      display: none;
+      width: calc(50% - 3rem);
+    }
+
+    .timeline-item-wrapper:nth-child(odd) .timeline-description {
+      margin-left: auto;
+    }
+
+    .timeline-description.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #fef3c7, #fed7aa);
+      margin-top: 5rem;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      margin-top: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #60a5fa, #a855f7, #ec489a);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo-svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .footer-logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #fff, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .footer-tagline {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: #a855f7;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-link {
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .social-link:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      color: #a855f7;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 2rem;
+      margin-top: 1rem;
+    }
+
+    .footer-bottom p {
+      margin: 0.5rem 0;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 20px;
+      }
+      .timeline-content, .timeline-description {
+        width: calc(100% - 3rem);
+        margin-left: 3rem !important;
+      }
+      .timeline-icon {
+        left: 20px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero-tagline {
+        font-size: 1.3rem;
+      }
+      .building-tabs {
+        gap: 0.5rem;
+      }
+      .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+      .etherva-title {
+        font-size: 1.2rem;
+      }
+      .logo-svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome</h1>
+  <div class="bg-animation"></div>
+  
+  <div class="header">
+    <div class="header-content">
+      <!-- Integrated Etherva Logo -->
+      <div class="etherva-logo" onclick="location.href='#'">
+        <svg class="logo-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g class="ribbon-group">
+            <path class="ribbon-path ribbon-1" d="M300 90 C360 90 430 160 430 220 C430 280 360 350 300 350 C240 350 170 280 170 220 C170 160 240 90 300 90"/>
+            <path class="ribbon-path ribbon-2" d="M300 510 C240 510 170 440 170 380 C170 320 240 250 300 250 C360 250 430 320 430 380 C430 440 360 510 300 510"/>
+            <path class="ribbon-path ribbon-3" d="M90 300 C90 240 160 170 220 170 C280 170 350 240 350 300 C350 360 280 430 220 430 C160 430 90 360 90 300"/>
+            <path class="ribbon-path ribbon-4" d="M510 300 C510 360 440 430 380 430 C320 430 250 360 250 300 C250 240 320 170 380 170 C440 170 510 240 510 300"/>
+          </g>
+          <text x="300" y="320" class="center-e">E</text>
+        </svg>
+        <div class="brand-text">
+          <div class="etherva-title">ETHERVA</div>
+          <div class="etherva-sub">education center</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Platform</a>
+        <a href="#" style="color: #a855f7;">About</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Learn Smarter</h1>
+    <div class="hero-tagline">Grow Together ✨</div>
+    <p>Eight passionate high school students, one mission: solving our own problem of not having an interactive platform that helps us study and keeps us tuned in.</p>
+  </div>
+
+  <div class="mission">
+    <div class="mission-content">
+      <h2>🎯 Our Story</h2>
+      <p>We're eight high school students who experienced the same struggle—boring study materials, no real progress tracking, and feeling disconnected while learning. So we decided to build the solution ourselves. Etherva is born from our frustration and fueled by our passion to create an interactive platform that actually makes learning engaging, trackable, and social. We're building this for ourselves, and for every student who deserves better.</p>
+    </div>
+  </div>
+
+  <!-- What We're Building Section with Tabs -->
+  <div class="building-section">
+    <div class="section-header">
+      <h2>✨ What We're Building</h2>
+      <p>An all-in-one platform designed to transform how students learn and connect</p>
+    </div>
+    
+    <div class="building-tabs">
+      <button class="tab-btn active" data-tab="features">🚀 Core Features</button>
+      <button class="tab-btn" data-tab="courses">📚 Courses</button>
+      <button class="tab-btn" data-tab="resources">📖 Resources</button>
+      <button class="tab-btn" data-tab="community">💬 Community Feed</button>
+    </div>
+
+    <!-- Core Features Tab -->
+    <div class="tab-content active" id="features-tab">
+      <div class="features-grid" id="featuresGrid"></div>
+    </div>
+
+    <!-- Courses Tab -->
+    <div class="tab-content" id="courses-tab">
+      <div class="courses-grid" id="coursesGrid"></div>
+    </div>
+
+    <!-- Resources Tab -->
+    <div class="tab-content" id="resources-tab">
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+
+    <!-- Community Feed Tab -->
+    <div class="tab-content" id="community-tab">
+      <div class="add-post">
+        <input type="text" id="postInput" placeholder="Share your learning journey...">
+        <button onclick="addNewPost()">Post ✨</button>
+      </div>
+      <div class="community-feed" id="communityFeed"></div>
+    </div>
+  </div>
+
+  <div class="team-section">
+    <h2>❤️ The Eight Builders</h2>
+    <div class="team-subtitle">Passionate high school students solving real problems with code & creativity</div>
+    <div class="team-grid" id="teamGrid"></div>
+  </div>
+
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" id="stat1">0</div>
+        <div class="stat-label">Hours of Development</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat2">0</div>
+        <div class="stat-label">Coffee Cups Consumed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat3">0</div>
+        <div class="stat-label">Lines of Code</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat4">0</div>
+        <div class="stat-label">Late Night Sessions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="journey-section">
+    <h2>📜 Our Journey</h2>
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Learn Smarter?</h2>
+    <p style="font-size: 1.2rem; color: #475569;">Join us on this journey. We're building Etherva for students like us.</p>
+    <button class="cta-button" onclick="alert('🎉 Thanks for your support! Etherva is coming soon. Follow our journey as eight high school students build something amazing!')">Be the First to Know →</button>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg class="footer-logo-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g class="ribbon-group">
+            <path class="ribbon-path ribbon-1" d="M300 90 C360 90 430 160 430 220 C430 280 360 350 300 350 C240 350 170 280 170 220 C170 160 240 90 300 90" stroke="#cf9f6e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="ribbon-path ribbon-2" d="M300 510 C240 510 170 440 170 380 C170 320 240 250 300 250 C360 250 430 320 430 380 C430 440 360 510 300 510" stroke="#9f7e5c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="ribbon-path ribbon-3" d="M90 300 C90 240 160 170 220 170 C280 170 350 240 350 300 C350 360 280 430 220 430 C160 430 90 360 90 300" stroke="#b48c5c" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="ribbon-path ribbon-4" d="M510 300 C510 360 440 430 380 430 C320 430 250 360 250 300 C250 240 320 170 380 170 C440 170 510 240 510 300" stroke="#cab09b" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="300" y="320" class="center-e" fill="white" font-size="18" font-weight="600" text-anchor="middle" dominant-baseline="middle">E</text>
+        </svg>
+        <div class="footer-logo-text">ETHERVA</div>
+      </div>
+      <p class="footer-tagline">Built by High School Students, for Students</p>
+      <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="#">Platform</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" class="social-link">📧</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">💻</a>
+        <a href="#" class="social-link">📷</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Etherva. From our classrooms to the world.</p>
+        <p class="footer-team">Eight passionate high school minds, one mission: helping everyone learn smarter and grow together</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Features Data
+    const features = [
+      {
+        icon: "🤖",
+        title: "AI-Powered Courses",
+        shortDesc: "Intelligent course recommendations and personalized learning paths.",
+        detail: "Our AI analyzes your learning patterns and suggests the perfect next lesson. It adapts in real-time to your pace, ensuring you never feel lost or bored. Built by Yohannes and Amanuel!"
+      },
+      {
+        icon: "📊",
+        title: "Progress Tracking",
+        shortDesc: "Visual dashboards showing your growth and skill mastery.",
+        detail: "Watch your progress come alive! Every completed lesson, every skill mastered is tracked beautifully. Set goals and celebrate milestones. Designed by Biruktawit using learning psychology principles."
+      },
+      {
+        icon: "⏱️",
+        title: "Time Manager",
+        shortDesc: "Pomodoro timer and study analytics to optimize focus.",
+        detail: "The Pomodoro timer helps you maintain focus with 25-minute sprints. Track your study streaks and build lasting habits. Created by Robsen to keep our team productive."
+      },
+      {
+        icon: "💬",
+        title: "Group Messaging",
+        shortDesc: "Connect with peers and collaborate in real-time.",
+        detail: "Create study groups, share resources, and discuss concepts with peers. Learning is better together! Built by Edom and Rodas."
+      }
+    ];
+
+    // Courses Data
+    const courses = [
+      { icon: "🐍", title: "Python Programming", desc: "Master Python from basics to advanced. Build real-world projects.", lessons: "24 lessons", students: "1,234 students" },
+      { icon: "🤖", title: "AI Fundamentals", desc: "Learn the core concepts of artificial intelligence and machine learning.", lessons: "18 lessons", students: "892 students" },
+      { icon: "📊", title: "Data Science", desc: "Analyze data, create visualizations, and build predictive models.", lessons: "32 lessons", students: "1,567 students" },
+      { icon: "🌐", title: "Web Development", desc: "Full-stack development with HTML, CSS, JavaScript, and React.", lessons: "40 lessons", students: "2,103 students" }
+    ];
+
+    // Resources Data
+    const resources = [
+      { icon: "📝", title: "Study Guides", desc: "Comprehensive notes and summaries for all major topics.", tag: "Free Access" },
+      { icon: "🎥", title: "Video Tutorials", desc: "Step-by-step video lessons from industry experts.", tag: "HD Quality" },
+      { icon: "📚", title: "Practice Problems", desc: "Interactive exercises with instant feedback.", tag: "500+ Problems" },
+      { icon: "🎯", title: "Project Templates", desc: "Ready-to-use templates for real-world projects.", tag: "Downloadable" }
+    ];
+
+    // Community Posts Data
+    let communityPosts = [
+      { user: "Alex Morgan", avatar: "🚀", time: "2 hours ago", content: "Just finished the Python module! The exercises were super helpful. Can't wait to start the AI course! 🔥", likes: 24, comments: 5 },
+      { user: "Sarah Chen", avatar: "🎨", time: "5 hours ago", content: "The Time Manager feature is a game-changer. Been using the Pomodoro timer and my focus has improved so much! ⏱️", likes: 42, comments: 8 },
+      { user: "Marcus Rodriguez", avatar: "⚙️", time: "1 day ago", content: "Anyone interested in forming a study group for the Data Science course? Let's learn together! 💪", likes: 67, comments: 23 }
+    ];
+
+    // Team Members Data
+    const teamMembers = [
+      { name: "Amanuel Tekalign", role: "Lead Coder", avatar: "💻", bio: "Architect of Etherva's core systems.", funFact: "Amanuel once debugged a critical issue for 14 hours straight. He's the reason our backend is rock solid." },
+      { name: "Robsen Mekonnen", role: "Team Leader", avatar: "👑", bio: "The glue that holds us together.", funFact: "Robsen keeps 8 high school developers organized. He runs our meetings with snacks and positive vibes." },
+      { name: "Yohannes Kebede", role: "React Master", avatar: "⚛️", bio: "Frontend wizard. Makes everything smooth.", funFact: "Yohannes dreams in React components. His code is so clean it should be in a museum." },
+      { name: "Milkiyas Getachew", role: "Marketer & Video Editor", avatar: "📢", bio: "Tells our story to the world.", funFact: "Milkiyas can turn any footage into magic. His videos make people actually want to watch educational content." },
+      { name: "Biruktawit Tafesse", role: "Psychology Expert", avatar: "🧠", bio: "Designs learning experiences that stick.", funFact: "Biruktawit knows exactly why some learning methods work and others don't. She's the reason Etherva actually helps you remember things." },
+      { name: "Edom Tewodross", role: "JavaScript Writer", avatar: "📜", bio: "Brings interactivity to life.", funFact: "Edom writes JavaScript that feels like poetry. She makes the platform feel alive and responsive." },
+      { name: "Biruk Eyob", role: "Video Editor & Graphics Designer", avatar: "🎬", bio: "Creates stunning visuals.", funFact: "Biruk makes everything look professional. His designs and videos have that 'wow' factor." },
+      { name: "Rodas Lemma", role: "HTML Editor & Layout Designer", avatar: "🎨", bio: "Crafts beautiful, responsive layouts.", funFact: "Rodas has an eye for layout that borders on supernatural. She ensures Etherva looks amazing on every device." }
+    ];
+
+    // Timeline Data
+    const timelineItems = [
+      { year: "The Problem", desc: "No interactive platform that actually made studying engaging.", story: "It all started in our high school classroom. Each of us was complaining about how boring studying was. Amanuel said 'Why don't we just build something better?' And we actually did it." },
+      { year: "The Idea", desc: "Eight students, one classroom, one shared frustration.", story: "That first meeting lasted 6 hours after school. We had pizza, energy drinks, and a whiteboard full of ideas. By midnight, we had the first sketch of what would become Etherva." },
+      { year: "Building Together", desc: "Late nights, endless coffee, and countless iterations.", story: "We've pulled all-nighters (even on school nights!), celebrated small wins, and cried over bugs. But every line of code brings us closer to helping students everywhere." },
+      { year: "The Future", desc: "Launching Etherva to help students everywhere.", story: "We're launching soon, but this is just the start. We want Etherva to evolve with our users. It's built by high school students for students, and we're just getting warmed up!" }
+    ];
+
+    // Populate Features
+    const featuresGrid = document.getElementById('featuresGrid');
+    features.forEach((feature, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'feature-card-wrapper';
+      wrapper.innerHTML = `
+        <div class="feature-card" data-feature="${index}">
+          <div class="feature-icon">${feature.icon}</div>
+          <h3>${feature.title}</h3>
+          <p>${feature.shortDesc}</p>
+        </div>
+        <div class="feature-description" id="feature-desc-${index}">${feature.detail}</div>
+      `;
+      featuresGrid.appendChild(wrapper);
+    });
+
+    // Populate Courses
+    const coursesGrid = document.getElementById('coursesGrid');
+    courses.forEach(course => {
+      const card = document.createElement('div');
+      card.className = 'course-card';
+      card.innerHTML = `
+        <div class="course-image">${course.icon}</div>
+        <div class="course-info">
+          <h3>${course.title}</h3>
+          <p>${course.desc}</p>
+          <div class="course-meta">
+            <span>📖 ${course.lessons}</span>
+            <span>👥 ${course.students}</span>
+          </div>
+        </div>
+      `;
+      card.onclick = () => alert(`✨ ${course.title}\n\n${course.desc}\n\n${course.lessons} • ${course.students}\n\nComing soon to Etherva!`);
+      coursesGrid.appendChild(card);
+    });
+
+    // Populate Resources
+    const resourcesGrid = document.getElementById('resourcesGrid');
+    resources.forEach(resource => {
+      const card = document.createElement('div');
+      card.className = 'resource-card';
+      card.innerHTML = `
+        <div class="resource-icon">${resource.icon}</div>
+        <h3>${resource.title}</h3>
+        <p>${resource.desc}</p>
+        <span class="resource-tag">${resource.tag}</span>
+      `;
+      card.onclick = () => alert(`📖 ${resource.title}\n\n${resource.desc}\n\nThis resource will be available when Etherva launches!`);
+      resourcesGrid.appendChild(card);
+    });
+
+    // Populate Community Feed
+    function renderCommunityFeed() {
+      const feed = document.getElementById('communityFeed');
+      feed.innerHTML = '';
+      communityPosts.forEach((post, index) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'feed-post';
+        postDiv.innerHTML = `
+          <div class="post-header">
+            <div class="post-avatar">${post.avatar}</div>
+            <div class="post-user">
+              <h4>${post.user}</h4>
+              <div class="post-time">${post.time}</div>
+            </div>
+          </div>
+          <div class="post-content">${post.content}</div>
+          <div class="post-stats">
+            <span onclick="likePost(${index})">❤️ ${post.likes} likes</span>
+            <span>💬 ${post.comments} comments</span>
+            <span>🔄 Share</span>
+          </div>
+        `;
+        feed.appendChild(postDiv);
+      });
+    }
+
+    function addNewPost() {
+      const input = document.getElementById('postInput');
+      const content = input.value.trim();
+      if (content) {
+        communityPosts.unshift({
+          user: "You",
+          avatar: "👤",
+          time: "Just now",
+          content: content,
+          likes: 0,
+          comments: 0
+        });
+        renderCommunityFeed();
+        input.value = '';
+      }
+    }
+
+    function likePost(index) {
+      communityPosts[index].likes++;
+      renderCommunityFeed();
+    }
+
+    window.addNewPost = addNewPost;
+    window.likePost = likePost;
+
+    // Populate Team Members
+    const teamGrid = document.getElementById('teamGrid');
+    teamMembers.forEach((member, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'team-card-wrapper';
+      wrapper.innerHTML = `
+        <div class="team-card" data-team="${index}">
+          <div class="team-card-inner">
+            <div class="team-avatar">${member.avatar}</div>
+            <div class="team-name">${member.name}</div>
+            <div class="team-role">${member.role}</div>
+            <div class="team-bio">${member.bio}</div>
+          </div>
+        </div>
+        <div class="team-description" id="team-desc-${index}">${member.funFact}</div>
+      `;
+      teamGrid.appendChild(wrapper);
+    });
+
+    // Populate Timeline
+    const timeline = document.getElementById('timeline');
+    timelineItems.forEach((item, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'timeline-item-wrapper';
+      wrapper.innerHTML = `
+        <div class="timeline-item" data-timeline="${index}">
+          <div class="timeline-icon">${index === 0 ? '💡' : index === 1 ? '🤝' : index === 2 ? '🚀' : '✨'}</div>
+          <div class="timeline-content">
+            <div class="timeline-year">${item.year}</div>
+            <div class="timeline-desc">${item.desc}</div>
+          </div>
+        </div>
+        <div class="timeline-description" id="timeline-desc-${index}">${item.story}</div>
+      `;
+      timeline.appendChild(wrapper);
+    });
+
+    // Tab Switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.dataset.tab;
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+      });
+    });
+
+    // Feature card click handlers
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const index = card.dataset.feature;
+        const description = document.getElementById(`feature-desc-${index}`);
+        document.querySelectorAll('.feature-description').forEach(desc => desc.classList.remove('show'));
+        description.classList.toggle('show');
+      });
+    });
+
+    // Team card click handlers
+    document.querySelectorAll('.team-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const index = card.dataset.team;
+        const description = document.getElementById(`team-desc-${index}`);
+        document.querySelectorAll('.team-description').forEach(desc => desc.classList.remove('show'));
+        description.classList.toggle('show');
+      });
+    });
+
+    // Timeline click handlers
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const index = item.dataset.timeline;
+        const description = document.getElementById(`timeline-desc-${index}`);
+        document.querySelectorAll('.timeline-description').forEach(desc => desc.classList.remove('show'));
+        description.classList.toggle('show');
+      });
+    });
+
+    // Animated counters
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16);
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+          element.textContent = Math.floor(target).toLocaleString();
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(start).toLocaleString();
+        }
+      }, 16);
+    }
+
+    const observerOptions = { threshold: 0.5 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          if (id === 'stat1') animateCounter(entry.target, 1247);
+          if (id === 'stat2') animateCounter(entry.target, 845);
+          if (id === 'stat3') animateCounter(entry.target, 15342);
+          if (id === 'stat4') animateCounter(entry.target, 189);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.stat-number').forEach(stat => observer.observe(stat));
+
+    // Initialize community feed
+    renderCommunityFeed();
+
+    // Floating particles
+    function createParticles() {
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'fixed';
+        particle.style.width = '2px';
+        particle.style.height = '2px';
+        particle.style.background = `rgba(96, 165, 250, ${Math.random() * 0.3})`;
+        particle.style.borderRadius = '50%';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '-1';
+        document.body.appendChild(particle);
+      }
+    }
+    createParticles();
+  </script>
 </body>
 </html>
